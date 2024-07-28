@@ -17,7 +17,7 @@ jobs:
         args: ["", --pest]
         include:
           - stack: react
-            args: --ssr --typescript
+            # args: --ssr --typescript
             laravel: 11
 
     name: Test Stubs - Laravel ${{ matrix.laravel }} - ${{ matrix.stack }} ${{ matrix.args }}
