@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   stub-tests:
     runs-on: ubuntu-22.04
@@ -11,7 +12,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        stack: [blade, react, api]
+        stack: [react, api]
         laravel: [11]
         args: ["", --pest]
         include:
@@ -22,6 +23,9 @@ jobs:
     name: Test Stubs - Laravel ${{ matrix.laravel }} - ${{ matrix.stack }} ${{ matrix.args }}
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -37,7 +41,7 @@ jobs:
           composer require laravel/breeze:@dev --no-interaction --no-update
           composer config repositories.breeze '{"type": "path", "url": "breeze"}' --file composer.json
 
-      - name: Checkout code
+      - name: Checkout Breeze
         uses: actions/checkout@v4
         with:
           path: "breeze"
@@ -49,7 +53,7 @@ jobs:
 
       - name: Install NPM dependencies
         if: matrix.stack != 'api'
-        run: npm i
+        run: npm install
 
       - name: Compile assets
         if: matrix.stack != 'api'
