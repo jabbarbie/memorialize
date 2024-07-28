@@ -16,11 +16,14 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '20'  # Sesuaikan dengan versi Node.js yang Anda gunakan
+        node-version: '20'  # Menggunakan Node.js versi 20
         cache: 'npm'
 
     - name: Install npm dependencies
       run: npm install
+
+    - name: Install @types/ziggy-js
+      run: npm install @types/ziggy-js
 
     - name: Build project
       run: npm run build
