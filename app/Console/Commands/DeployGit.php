@@ -48,6 +48,18 @@ class DeployGit extends Command
         File::copyDirectory($source, $destination);
 
         $this->info('Successfully copied public files to ' . $destination);
-        Log::info('Successfully copied public files to ' . $destination);
+
+        // Rename index_public.php ke index.php
+        $oldFile = $destination . '/index_public.php';
+        $newFile = $destination . '/index.php';
+
+        if (File::exists($oldFile)) {
+            File::move($oldFile, $newFile);
+            $this->info('Successfully renamed index_public.php to index.php');
+            Log::info('Successfully renamed index_public.php to index.php in ' . $destination);
+        } else {
+            $this->error('index_public.php does not exist in the destination directory.');
+            Log::error('index_public.php does not exist in the destination directory: ' . $destination);
+        }
     }
 }
