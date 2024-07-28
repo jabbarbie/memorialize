@@ -57,13 +57,13 @@ export default function Authenticated({ user, header, children, otherMenu }: Pro
             <footer>
                 <nav>
                     <ul>
-                        <li><a href="/" className={`${route().current('dashboard') ? 'active' : null}`}>Dasboard</a></li>
+                        <li><a href="/" className={`${route().current('dashboard') ? 'active' : null}`}>D</a></li>
                         <li>
-                            <a href="/projects" className={`${route().current('projects.*') ? 'active' : null}`}>Project</a>
+                            <a href="/projects" className={`${route().current('projects.*') ? 'active' : null}`}>P</a>
                         </li>
-                        <li><a href="/notes" className={`${route().current('notes.*') ? 'active' : null}`}>Notes</a></li>
+                        <li><a href="/notes" className={`${route().current('notes.*') ? 'active' : null}`}>N</a></li>
                         {/* <li><a href="">Task</a></li> */}
-                        <li><a href="">Scrum</a></li>
+                        <li><a href="">S</a></li>
                     </ul>
                     <ul className='hide_mobile'>
                         {route().current('projects.index') && <li><a href='/projects/create'>+</a></li>}

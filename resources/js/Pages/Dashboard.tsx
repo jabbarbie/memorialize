@@ -39,17 +39,17 @@ export default function Dashboard({ auth, note }: MainProps) {
 
     useEffect(() => {
         console.log("lastWord", lastWord)
-        if (lastWord == "Escape"){
+        if (lastWord == "Escape") {
             setPreview(true)
             handleBlur()
         }
 
-        if (lastWord == "Enter"){
+        if (lastWord == "Enter") {
             setPreview(false)
         }
     }, [lastWord])
-    
-    const globalHandleKeyDown = (event: any) => {        
+
+    const globalHandleKeyDown = (event: any) => {
         if (event.key === 'Escape') {
             setLastWord("Escape")
         }
@@ -71,7 +71,7 @@ export default function Dashboard({ auth, note }: MainProps) {
 
     useEffect(() => {
         // setTypedCount(0)
-        if (!preview){
+        if (!preview) {
             lastLine()
         }
     }, [preview]);
@@ -110,7 +110,7 @@ export default function Dashboard({ auth, note }: MainProps) {
 
     };
 
-    
+
 
     return (
         <AuthenticatedLayout
@@ -118,13 +118,35 @@ export default function Dashboard({ auth, note }: MainProps) {
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
         >
             <Head title="Dashboard" />
-
             <div id="home__wrapper">
+                <nav className="home__nav d-none">
+                    <ul>
+                        <li><a>D</a></li>
+                        <li><a>P</a></li>
+                        <li><a>S</a></li>
+                        <li><a>N</a></li>
+                    </ul>
+                </nav>
+                <div className="home__aside">
+                    <div className="link__title">
+                        <h3>Scrum</h3>
+                    </div>
 
+                    <div className="link__group">
+                        <p>Prefix</p>
+                        <p>Saya hari ini :</p>
+                    </div>
+                    <div className="link__group_row" style={{ display: 'none' }}>
+                        <p>Project hari ini</p>
+                        <ul>
+                            <li>Lorem</li>
+                            <li>Ipsum</li>
+                            <li>Tralala</li>
+                        </ul>
+                    </div>
+                    <button>Send To Whatsapp</button>
+                </div>
                 <div className='home__main'>
-
-                    {/* <h3>Notes</h3> */}
-
                     {preview ?
                         <div id="display" className='textarea__preview' >
                             {formatText(content)}
@@ -142,10 +164,6 @@ export default function Dashboard({ auth, note }: MainProps) {
                     }
 
                 </div>
-
-                {/* <div className="home__aside">
-                        <h3>Scrum</h3>
-                    </div> */}
             </div>
 
         </AuthenticatedLayout>

@@ -18,12 +18,15 @@
     color: $pastel-green;
 }
 
+html {
+    font-size: 16px;
+    font-family: $font-primary;
+}
 
 body {
     padding: 0;
     margin: 0;
 
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
     background-color: #0F0F0F;
 
@@ -48,12 +51,12 @@ header {
 }
 
 main {
-    padding: 1rem;
+    // padding: 1rem;
 
     .grid {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
-        gap: 1rem;
+        // gap: 1rem;
 
         .box {
             background-color: #1F1F1F;
@@ -63,15 +66,17 @@ main {
     }
 
     @media (max-width: $mobile-breakpoint) {
-        padding: 2rem 1rem;
+        // padding: 2rem 1rem;
     }
 
 }
 
 footer {
     border-top: 1px solid $secondary;
-    background-color: rgba($color: #000, $alpha: .2);
+    // background-color: rgba($color: #000, $alpha: .2);
+    font-size: .9rem;
 
+    background-color: #181818;
     nav {
         display: flex;
         justify-content: space-between;
@@ -92,7 +97,7 @@ footer {
                     text-decoration: none;
                     padding: .8rem 1rem;
 
-                    font-size: .9rem;
+                    font-size: 1em;
                     color: rgba($color: #fff, $alpha: .5);
 
                     border-right: 1px solid $secondary;
@@ -140,16 +145,18 @@ footer {
 
     @media (max-width: $mobile-breakpoint) {
         border-top-width: 0;
-
         nav {
             flex-direction: column;
 
             ul {
-                flex-direction: column;
-
+                flex-direction: row;
+                display: none;
                 li {
                     a {
                         border-left: 1px solid $secondary;
+                        text-align: center;
+                        padding: .7em;
+                        margin: 0;
                     }
 
                     &:first-child {
@@ -169,12 +176,12 @@ input,
 textarea {
     background-color: #121212 !important;
     font-size: 1.2rem;
-    font-family: "Roboto";
+    font-family: $font-primary;
 
     &:focus {
         outline: none;
         box-shadow: none;
-        border: 1px solid $secondary;
+        border: 0px solid $secondary;
     }
 
 }
@@ -283,5 +290,28 @@ label {
     &:hover {
         color: yellow;
         border-color: yellow;
+    }
+}
+
+
+.line {
+    display: flex;
+    flex-direction: row;
+    // gap: 1rem;
+    // justify-content: center;
+    // align-items: center;
+
+    p {
+        font-size: 1rem;
+
+    }
+
+    .line__prefxix {
+        width: 2rem;
+        color: $secondary_10;
+        // background-color: red;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
