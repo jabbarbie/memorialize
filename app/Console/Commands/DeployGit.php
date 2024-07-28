@@ -35,7 +35,7 @@ class DeployGit extends Command
 
         $this->info('Successfully pulled latest changes from git.');
 
-        // Copy files dari public ke /home/plkmyid/public_html
+        // Path sumber dan tujuan
         $source = public_path();
         $destination = '/home/plkmyid/public_html';
 
@@ -45,14 +45,23 @@ class DeployGit extends Command
             return;
         }
 
-        File::copyDirectory($source, $destination);
+        // Hapus semua file di direktori tujuan
+        File::cleanDirectory($destination);
+        $this->info('Successfully cleaned the destination directory.');
 
+        // Copy files dari public ke /home/plkmyid/public_html
+        File::copyDirectory($source, $destination);
         $this->info('Successfully copied public files to ' . $destination);
+
+        // Hapus file index.php jika ada
+        $newFile = $destination . '/index.php';
+        if (File::exists($newFile)) {
+            File::delete($newFile);
+            $this->info('Existing index.php has been deleted.');
+        }
 
         // Rename index_public.php ke index.php
         $oldFile = $destination . '/index_public.php';
-        $newFile = $destination . '/index.php';
-
         if (File::exists($oldFile)) {
             File::move($oldFile, $newFile);
             $this->info('Successfully renamed index_public.php to index.php');
