@@ -35,8 +35,19 @@ jobs:
           tools: composer:v2
           coverage: none
 
-      - name: Setup Laravel
+      - name: Check if Laravel is installed
         run: |
+          if [ -f artisan ]; then
+            echo "Laravel is already installed"
+            exit 0
+          else
+            echo "Laravel is not installed"
+          fi
+
+      - name: Setup Laravel
+        if: always() && !success()
+        run: |
+          rm -rf ./*
           composer create-project laravel/laravel:^${{ matrix.laravel }} .
           composer require laravel/breeze:@dev --no-interaction --no-update
           composer config repositories.breeze '{"type": "path", "url": "breeze"}' --file composer.json
