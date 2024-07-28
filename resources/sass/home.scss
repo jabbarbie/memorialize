@@ -68,6 +68,19 @@
             flex-direction: row;
             font-size: inherit;
 
+            input {
+                all: unset;
+                padding: 0;
+                display: inline;
+                text-align: right;
+                width: auto;
+                background-color: transparent !important;
+
+                &:focus {
+                    color: white;
+                }
+            }
+
         }
 
         .link__group_row { }
@@ -92,7 +105,7 @@
         position: relative;
         background-color: #1F1F1F;
         height: 100%;
-        width: 80%;
+        width: 82%;
         padding-top: 1.5rem;
         overflow: hidden;
 

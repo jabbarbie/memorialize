@@ -31,6 +31,9 @@ export default function Dashboard({ auth, note }: MainProps) {
     const [typedCount, setTypedCount] = useState<number>(0)
     const [lastWord, setLastWord] = useState<string>("")
 
+    const [waNumber, setWaNumber] = useState<string>("62895615912993")
+    const [sayaHariIni, setSayaHariIni] = useState<string>("saya hari ini")
+
     const handleChange = (e: any) => {
         setTypedCount((_old) => _old + 1)
         setChanged(true)
@@ -111,6 +114,118 @@ export default function Dashboard({ auth, note }: MainProps) {
     };
 
 
+    const getScrumText = (): string[] => {
+        if (!content || content.length == 0) return []
+        let scrum_line = false
+
+        console.log((content))
+
+        let url_array: string[] = []
+        content.split('\n').map((line, index) => {
+            console.log(index, line, scrum_line)
+
+            if (line.trim().startsWith('#')) {
+                console.log("ada prefix scrum", line.trim().startsWith('#'))
+                console.log("isinya", line.slice(1).toUpperCase())
+
+                if (line.slice(1).toUpperCase().trim() == "SCRUM") {
+                    console.log(line.slice(1).toUpperCase())
+
+                    scrum_line = true
+                }
+            } else if (line.trim().length > 0) {
+                if (scrum_line) {
+                    console.log("lanjut", line)
+                    url_array.push(line + '\n')
+                    scrum_line = true
+
+                }
+            } else {
+                console.log('gagal', line)
+                scrum_line = false
+            }
+        })
+
+
+        console.log('finish', url_array)
+
+        return url_array
+    }
+    const sendToWA = () => {
+        const url_array = getScrumText()
+
+        if (url_array.length > 0) {
+            url_array.unshift(sayaHariIni + " : \n")
+            const message = url_array.join('');
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/${waNumber}?text=${encodedMessage}`;
+            window.open(whatsappUrl)
+        } else {
+            console.log(url_array)
+            toast.error('Pastikan format scrum benar', {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: 0,
+                theme: "dark",
+                transition: Flip,
+            });
+
+        }
+    }
+
+    const copyToClipboard = () => {
+        const url_array = getScrumText()
+
+        if (url_array.length > 0) {
+            url_array.unshift(sayaHariIni + " : \n")
+
+            const message = url_array.join('');
+            // const encodedMessage = encodeURIComponent(message);
+
+            navigator.clipboard.writeText(message).then(() => {
+
+                toast.success('Copied', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: 0,
+                    theme: "dark",
+                    transition: Flip,
+                });
+            }).catch(err => {
+                toast.error('Failed', {
+                    position: "top-right",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: false,
+                    draggable: false,
+                    progress: 0,
+                    theme: "dark",
+                    transition: Flip,
+                });
+            });
+        } else {
+            toast.error('Pastikan format scrum benar', {
+                position: "top-right",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                progress: 0,
+                theme: "dark",
+                transition: Flip,
+            });
+        }
+    }
 
     return (
         <AuthenticatedLayout
@@ -134,7 +249,11 @@ export default function Dashboard({ auth, note }: MainProps) {
 
                     <div className="link__group">
                         <p>Prefix</p>
-                        <p>Saya hari ini :</p>
+                        <input type='text' value={sayaHariIni}  onChange={(e) => setSayaHariIni(e.currentTarget.value)} />
+                    </div>
+                    <div className="link__group">
+                        <p>Whatsapp Number</p>
+                        <input type='text' value={waNumber} onChange={(e) => setWaNumber(e.currentTarget.value)} />
                     </div>
                     <div className="link__group_row" style={{ display: 'none' }}>
                         <p>Project hari ini</p>
@@ -144,7 +263,8 @@ export default function Dashboard({ auth, note }: MainProps) {
                             <li>Tralala</li>
                         </ul>
                     </div>
-                    <button>Send To Whatsapp</button>
+                    <button onClick={sendToWA}>Send To Whatsapp</button>
+                    <button onClick={copyToClipboard} className='mt-3'>Copy Text</button>
                 </div>
                 <div className='home__main'>
                     {preview ?
