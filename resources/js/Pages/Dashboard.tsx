@@ -170,7 +170,7 @@ export default function Dashboard({ auth, note }: MainProps) {
                 pauseOnHover: false,
                 draggable: false,
                 progress: 0,
-                theme: "dark",
+                theme: "dark", 
                 transition: Flip,
             });
 

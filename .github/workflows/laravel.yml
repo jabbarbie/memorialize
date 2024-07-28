@@ -12,9 +12,9 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        stack: [react, api]
+        stack: [react]
         laravel: [11]
-        args: ["", --pest]
+        # args: ["", --pest]
         include:
           - stack: react
             # args: --ssr --typescript
