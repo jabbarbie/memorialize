@@ -1,29 +1,56 @@
-name: Build
+name: git-pull
 
 on:
   push:
     branches:
-      - main  # Atur branch sesuai dengan branch yang Anda gunakan
-
+      - main
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  stub-tests:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: true
+      matrix:
+        stack: [blade, react, api]
+        laravel: [11]
+        args: ["", --pest]
+        include:
+          - stack: react
+            args: --ssr --typescript
+            laravel: 11
+
+    name: Test Stubs - Laravel ${{ matrix.laravel }} - ${{ matrix.stack }} ${{ matrix.args }}
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          extensions: dom, curl, libxml, mbstring, zip
+          ini-values: error_reporting=E_ALL
+          tools: composer:v2
+          coverage: none
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'  # Menggunakan Node.js versi 20
-        cache: 'npm'
+      - name: Setup Laravel
+        run: |
+          composer create-project laravel/laravel:^${{ matrix.laravel }} .
+          composer require laravel/breeze:@dev --no-interaction --no-update
+          composer config repositories.breeze '{"type": "path", "url": "breeze"}' --file composer.json
 
-    - name: Install npm dependencies
-      run: npm install
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: "breeze"
 
-    - name: Install @types/ziggy-js
-      run: npm install @types/ziggy-js
+      - name: Install Breeze
+        run: |
+          composer update "laravel/breeze" --prefer-dist --no-interaction --no-progress -W
+          php artisan breeze:install ${{ matrix.stack }} ${{ matrix.args }}
 
-    - name: Build project
-      run: npm run build
+      - name: Install NPM dependencies
+        if: matrix.stack != 'api'
+        run: npm i
+
+      - name: Compile assets
+        if: matrix.stack != 'api'
+        run: npm run build
