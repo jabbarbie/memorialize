@@ -10,7 +10,7 @@ $secondary : rgba(255, 255, 255, .1);
 $secondary_50 : rgba(255, 255, 255, .5);
 $mobile-breakpoint: 768px;
 
-$primary : yellow;
+$primary : rgb(56, 164, 197);
 $text-highlight: cyan;
 
 $pastel-red: rgb(255, 179, 186);
@@ -23,3 +23,14 @@ $text-note: $pastel-blue;
 $text-scrum: $pastel-orange;
 $text-project: $pastel-red;
 $text-notulen: $pastel-green;
+
+
+:root {
+    color-scheme: light dark;
+}
+
+body {
+    color: light-dark(CanvasText, #efefec);
+    background-color: light-dark(#ffffff, #0F0F0F);
+}
+

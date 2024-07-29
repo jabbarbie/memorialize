@@ -1,0 +1,9 @@
+// Define the breakpoint for mobile
+$mobile-breakpoint: 769px;
+
+// Mixin for mobile-only media queries
+@mixin desktop {
+    @media (min-width: $mobile-breakpoint) {
+        @content;
+    }
+}
