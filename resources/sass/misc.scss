@@ -30,6 +30,10 @@
         .box__body {
             // display: none;
             padding: .5rem;
+
+            p {
+                word-break: break-all;
+            }
         }
 
         &:last-child() {}

@@ -44,7 +44,7 @@ export default function Note({ auth, notes }: MainProps) {
                                 <span>{d.created_at}</span>
                             </div>
                         </div>
-                        <div className="box__body">{d.name.trim().length > 0 ? d.name.trim() : '-'}</div>
+                        <div className="box__body"><p>{d.name.trim().length > 0 ? d.name.trim() : '-'}</p></div>
                     </a>
                 ))}
             </div>

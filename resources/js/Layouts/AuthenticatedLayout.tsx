@@ -57,7 +57,7 @@ export default function Authenticated({ user, header, children, aside, otherMenu
 
             <div id="wrapper">
                 <main>
-                    <div id="wrapper__main">
+                    <div id="wrapper__main" onClick={() => setIsOpen(false)}>
                         {children}
                     </div>
 
