@@ -1,0 +1,41 @@
+// _theme.scss
+@mixin theme($primary, $secondary, $background, $header, $footer, $box-bg) {
+    $primary-color: $primary;
+    $secondary-color: $secondary;
+    $background-color: $background;
+    $header-color: $header;
+    $footer-color: $footer;
+    $box-background-color: $box-bg;
+
+    #wrapper {
+        background-color: red;
+        display: grid;
+        grid-template-rows: max-content auto max-content;
+        height: 100vh;
+
+        header {
+            background-color: $header-color;
+        }
+
+        main {
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+
+                .box {
+                    background-color: $box-background-color;
+                    border: 1px solid $secondary-color;
+                    padding: 1rem;
+                }
+            }
+
+            @media (max-width: $mobile-breakpoint) {
+                // padding: 2rem 1rem;
+            }
+        }
+
+        footer {
+            background-color: $footer-color;
+        }
+    }
+}

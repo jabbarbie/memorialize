@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react';
 import { PageProps, User } from '@/types';
 import '../../sass/home.scss'
 import axios from 'axios';
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { Bounce, Flip, ToastContainer, toast } from 'react-toastify';
 import { formatText } from '@/helper';
 
@@ -170,14 +170,15 @@ export default function Dashboard({ auth, note }: MainProps) {
                 pauseOnHover: false,
                 draggable: false,
                 progress: 0,
-                theme: "dark", 
+                theme: "dark",
                 transition: Flip,
             });
 
         }
     }
 
-    const copyToClipboard = () => {
+    const copyToClipboard = (e: any) => {
+        e.preventDefault()
         const url_array = getScrumText()
 
         if (url_array.length > 0) {
@@ -231,60 +232,30 @@ export default function Dashboard({ auth, note }: MainProps) {
         <AuthenticatedLayout
             user={auth.user}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>}
+            aside={
+                <ul>
+                    <li>
+                        <a href="" onClick={copyToClipboard}>Copy Scrum</a>
+                    </li>
+                </ul>
+            }
         >
             <Head title="Dashboard" />
-            <div id="home__wrapper">
-                <nav className="home__nav d-none">
-                    <ul>
-                        <li><a>D</a></li>
-                        <li><a>P</a></li>
-                        <li><a>S</a></li>
-                        <li><a>N</a></li>
-                    </ul>
-                </nav>
-                <div className="home__aside">
-                    <div className="link__title">
-                        <h3>Scrum</h3>
-                    </div>
-
-                    <div className="link__group">
-                        <p>Prefix</p>
-                        <input type='text' value={sayaHariIni}  onChange={(e) => setSayaHariIni(e.currentTarget.value)} />
-                    </div>
-                    <div className="link__group">
-                        <p>Whatsapp Number</p>
-                        <input type='text' value={waNumber} onChange={(e) => setWaNumber(e.currentTarget.value)} />
-                    </div>
-                    <div className="link__group_row" style={{ display: 'none' }}>
-                        <p>Project hari ini</p>
-                        <ul>
-                            <li>Lorem</li>
-                            <li>Ipsum</li>
-                            <li>Tralala</li>
-                        </ul>
-                    </div>
-                    <button onClick={sendToWA}>Send To Whatsapp</button>
-                    <button onClick={copyToClipboard} className='mt-3'>Copy Text</button>
-                </div>
-                <div className='home__main'>
-                    {preview ?
-                        <div id="display" className='textarea__preview' >
-                            {formatText(content)}
-                        </div> :
-                        <textarea
-                            ref={textareaRef}
-                            className=''
-                            // rows={30}
-                            spellCheck="false"
-                            value={content}
-                            autoFocus={true}
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                        />
-                    }
-
-                </div>
-            </div>
+            {preview ?
+                <div id="display" className='textarea__preview' >
+                    {formatText(content)}
+                </div> :
+                <textarea
+                    ref={textareaRef}
+                    className=''
+                    // rows={30}
+                    spellCheck="false"
+                    value={content}
+                    autoFocus={true}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                />
+            }
 
         </AuthenticatedLayout>
     );

@@ -1,4 +1,4 @@
-import { useState, PropsWithChildren, ReactNode, useEffect } from 'react';
+import { useState, PropsWithChildren, ReactNode, useEffect, Fragment } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
@@ -28,9 +28,15 @@ const monthList = [
     "Desember"
 ];
 
-export default function Authenticated({ user, header, children, otherMenu }: PropsWithChildren<{ user: User, header?: ReactNode, otherMenu?: ReactNode }>) {
+export default function Authenticated({ user, header, children, aside, otherMenu }: PropsWithChildren<{ user: User, header?: ReactNode, aside?: ReactNode, otherMenu?: ReactNode }>) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     const [currentTime, setCurrentTime] = useState(moment());
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
 
     useEffect(() => {
         moment.locale('id');
@@ -43,37 +49,69 @@ export default function Authenticated({ user, header, children, otherMenu }: Pro
     }, []);
 
 
-    const fullTime = (dayList[moment().day()]) + ", " + (moment().date()) + " " + (monthList[(moment().month())]) + " " + (moment().year())
+    const fullTime = (dayList[moment().day()]) + ", " + (moment().date()) + " " + (monthList[(moment().month())]) + " " + ' | ' + (moment(currentTime).format('HH:mm:ss'))
 
     return (
-        <div id="wrapper">
-            <header>
-                <ToastContainer />
-                {!route().current('dashboard') &&
-                    <h1>{route().current('dashboard')}</h1>
-                }
-            </header>
-            <main>{children}</main>
-            <footer>
-                <nav>
-                    <ul>
-                        <li><a href="/" className={`${route().current('dashboard') ? 'active' : null}`}>D</a></li>
-                        <li>
-                            <a href="/projects" className={`${route().current('projects.*') ? 'active' : null}`}>P</a>
-                        </li>
-                        <li><a href="/notes" className={`${route().current('notes.*') ? 'active' : null}`}>N</a></li>
-                        {/* <li><a href="">Task</a></li> */}
-                        <li><a href="">S</a></li>
-                    </ul>
-                    <ul className='hide_mobile'>
-                        {route().current('projects.index') && <li><a href='/projects/create'>+</a></li>}
-                        {otherMenu}
-                        <li><a href="" >{fullTime}</a></li>
-                        <li><a href="" className='active'>{currentTime.format('HH:mm:ss')}</a></li>
-                    </ul>
-                </nav>
-            </footer>
-        </div>
+        <Fragment>
+            <ToastContainer />
+
+            <div id="wrapper">
+                <main>
+                    {children}
+
+                    <div id="floating_sidebar" className={`${isOpen ? 'open' : null}`}>
+                        <ul>
+                            <li>
+                                <a className={`${route().current('dashboard') ? 'active' : null}`} href="/">Dashboard</a>
+                            </li>
+                            <li>
+                                <a className={`${route().current('projects.*') ? 'active' : null}`} href="/projects">Project</a>
+                            </li>
+                            {/* <li>
+                                <a className={`${route().current('scrums.*') ? 'active' : null}`} href="/scrum">Scrum</a>
+                            </li> */}
+
+                            <li>
+                                <a className={`${route().current('notes.*') ? 'active' : null}`} href="/notes">Notes</a>
+                            </li>
+                        </ul>
+                        {aside}
+                    </div>
+
+                </main>
+                <aside>
+                    {aside}
+                </aside>
+                <footer>
+                    <nav>
+                        <ul className='menu__desktop'>
+                            <li><a href="/" className={`${route().current('dashboard') ? 'active' : null}`}>D</a></li>
+                            <li>
+                                <a href="/projects" className={`${route().current('projects.*') ? 'active' : null}`}>P</a>
+                            </li>
+                            <li><a href="/notes" className={`${route().current('notes.*') ? 'active' : null}`}>N</a></li>
+                            {/* <li><a href="">Task</a></li> */}
+                            <li><a href="">S</a></li>
+                        </ul>
+                        <ul className='menu__mobile'>
+                            {route().current('projects.index') && <li><a href='/projects/create'>+</a></li>}
+                            {otherMenu}
+                            <li><a href="" >{fullTime}</a></li>
+                            <li>
+                                <div
+                                    className={`burger-menu ${isOpen ? 'open' : ''}`}
+                                    onClick={toggleMenu}
+                                >
+                                    <div className="bar"></div>
+                                    <div className="bar"></div>
+                                    <div className="bar"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </footer>
+            </div >
+        </Fragment >
     )
     return (
         <div className="min-h-screen bg-gray-100">

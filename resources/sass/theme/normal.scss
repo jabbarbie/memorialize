@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+$color__primary: skyblue;
+$bg__color: #121212;
+
+$color__secondary01: rgba(255, 255, 255, .01);
+$color__secondary02: rgba(255, 255, 255, .02);
+$color__secondary03: rgba(255, 255, 255, .03);
+$color__secondary04: rgba(255, 255, 255, .04);
+$color__secondary05: rgba(255, 255, 255, .05);
+$color__secondary06: rgba(255, 255, 255, .06);
+$color__secondary07: rgba(255, 255, 255, .07);
+$color__secondary08: rgba(255, 255, 255, .08);
+$color__secondary09: rgba(255, 255, 255, .09);
+$color__secondary10: rgba(255, 255, 255, .10);
+$color__secondary20: rgba(255, 255, 255, .20);
+$color__secondary30: rgba(255, 255, 255, .30);
+$color__secondary40: rgba(255, 255, 255, .40);
+$color__secondary50: rgba(255, 255, 255, .50);
+$color__secondary60: rgba(255, 255, 255, .60);
+$color__secondary70: rgba(255, 255, 255, .70);
+$color__secondary80: rgba(255, 255, 255, .80);
+$color__secondary90: rgba(255, 255, 255, .90);
+$color__secondary100: rgba(255, 255, 255, 1);
+
+$font__familyFamily: "Poppins", sans-serif;
+
+
+// global
+$color__text: #efefef;
+$color__textInactive: rgba($color__text, .5);
+$color__textActive: $color__primary;
+
+$link: $color__primary;
+$border_color: $color__secondary10;
+
+// body
+$body__background: $color__secondary01;
+$body__color: $color__secondary90;
+
+// footer
+$footer_color: $color__secondary90;
+$footer_background: $bg__color;
+
+// $font-primary: "Poppins", sans-serif;
+// $secondary_02 : rgba(255, 255, 255, .02);
+// $secondary_05 : rgba(255, 255, 255, .05);
+// $secondary_10 : rgba(255, 255, 255, .1);
+// $secondary_25 : rgba(255, 255, 255, .25);
+// $secondary : rgba(255, 255, 255, .1);
+// $secondary_50 : rgba(255, 255, 255, .5);
+// $mobile-breakpoint: 768px;
+
+// $primary : rgb(56, 164, 197);
+// $text-highlight: cyan;
+
+// $pastel-red: rgb(255, 179, 186);
+// $pastel-orange: rgb(255, 223, 186);
+// $pastel-yellow: rgb(255, 255, 186);
+// $pastel-green: rgb(186, 255, 201);
+// $pastel-blue: rgb(186, 225, 255);
+
+// $text-note: $pastel-blue;
+// $text-scrum: $pastel-orange;
+// $text-project: $pastel-red;
+// $text-notulen: $pastel-green;

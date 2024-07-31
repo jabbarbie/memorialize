@@ -12,6 +12,8 @@ interface Note {
     updated_at: string
     created_at: string
     is_done: boolean
+    created_at_day: string
+    human_date_created_at: string
 }
 
 interface MainProps {
@@ -32,7 +34,22 @@ export default function Note({ auth, notes }: MainProps) {
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Note</h2>}
         >
             <Head title="Note" />
-            <div id="home__wrapper">
+
+            <div className="box-list">
+                {notes.data.map((d) => (
+                    <a className='box' role='button' href={`/notes/${d.id}`}>
+                        <div className="box__header">
+                            <div className="box__tool">
+                                <span className='text-active'>{d.human_date_created_at}</span>
+                                <span>{d.created_at}</span>
+                            </div>
+                        </div>
+                        <div className="box__body">{d.name.trim().length > 0 ? d.name.trim() : '-'}</div>
+                    </a>
+                ))}
+            </div>
+
+            {/* <div id="home__wrapper">
                 <div className='home__header'>
                     <h3>Note</h3>
                     <div className='home__header_right'>
@@ -49,11 +66,7 @@ export default function Note({ auth, notes }: MainProps) {
                         ))}
                     </div>
                 </div>
-
-                {/* <div className="home__aside">
-                        <h3>Scrum</h3>
-                    </div> */}
-            </div>
+            </div> */}
 
         </AuthenticatedLayout>
     );

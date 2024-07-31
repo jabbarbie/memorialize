@@ -19,8 +19,12 @@ class NoteResource extends JsonResource
             'id'    => $this->id,
             'name'    => $this->name,
             'is_done'    => $this->is_done,
-            'created_at'    => Carbon::parse($this->created_at)->translatedFormat('l, d M Y'),
-            'updated_at'    => Carbon::parse($this->updated_at)->translatedFormat('l, d M Y'),
+            'created_at'    => Carbon::parse($this->created_at)->translatedFormat('l, d M'),
+            'updated_at'    => Carbon::parse($this->updated_at)->translatedFormat('l, d M'),
+            'created_at_day'    => Carbon::parse($this->updated_at)->translatedFormat('l'),
+
+            'human_date_created_at' => Carbon::parse($this->created_at)->diffForHumans(),
+
         ];
     }
 }

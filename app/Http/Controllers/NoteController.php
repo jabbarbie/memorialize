@@ -11,7 +11,7 @@ class NoteController extends Controller
 {
     public function index()
     {
-        $notes = Notes::where('is_done', 1)->get();
+        $notes = Notes::where('is_done', 1)->orderByDesc('created_at')->get();
 
         return Inertia::render('Note', [
             'notes'  => NoteResource::collection($notes)
