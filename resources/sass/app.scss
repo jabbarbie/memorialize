@@ -42,6 +42,7 @@ body {
         // padding: 1rem;
         position: relative;
         max-height: 95dvh;
+        overflow-y: scroll;
 
         textarea {
             width: 100%;
