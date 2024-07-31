@@ -57,7 +57,9 @@ export default function Authenticated({ user, header, children, aside, otherMenu
 
             <div id="wrapper">
                 <main>
-                    {children}
+                    <div id="wrapper__main">
+                        {children}
+                    </div>
 
                     <div id="floating_sidebar" className={`${isOpen ? 'open' : null}`}>
                         <ul>
